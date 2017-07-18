@@ -1,6 +1,6 @@
 # TinyNet
 
-Implementations of CNNs, RNNs and cool new techniques in deep learning
+Implementations of CNNs, RNNs and cool new techniques in deep learning.
 
 **Network Architecture**
 1. Convolutional network
