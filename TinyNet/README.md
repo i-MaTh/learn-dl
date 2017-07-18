@@ -14,19 +14,21 @@ Implementations of CNNs, RNNs and cool new techniques in deep learning.
 5. RMSprop
 6. Adam
 
+**Activation Functions**
+1. Sigmoid
+2. tanh
+3. ReLU
+
 **Regularization**
 1. Dropout
 2. L1 and L2 Regularization
 
-**Cool Techniques**
+**Other Techniques**
 
 1. BatchNorm
 2. Xavier Weight Initialization
 
-**Activation Functions**
-1. ReLU
-2. Sigmoid
-3. tanh
+
 
 ## Reference
 http://cs231n.github.io/
