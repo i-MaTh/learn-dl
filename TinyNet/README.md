@@ -3,9 +3,8 @@
 Implementations of CNNs, RNNs and cool new techniques in deep learning
 
 **Network Architecture**
-1. Convolutional net
-2. Feed forward net
-3. Recurrent net
+1. Convolutional network
+2. Recurrent network
 
 **Optimization Algorithms**
 1. SGD
@@ -24,7 +23,7 @@ Implementations of CNNs, RNNs and cool new techniques in deep learning
 1. BatchNorm
 2. Xavier Weight Initialization
 
-**Nonlinearities**
+**Activation Functions**
 1. ReLU
 2. Sigmoid
 3. tanh
