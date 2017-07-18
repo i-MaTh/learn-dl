@@ -78,23 +78,23 @@ class RNN:
         dout = softmax(out)
         dout[range(len(y)), y] -= 1
         # fully connected backward step
-		#dWhy = X_onehot.T @ dout
-		dWhy = X_onehot.T * dout
-		dby = np.sum(dWhy, axis=0).reshape(1, -1)
-		#dh = dout @ self.dWhy.T
+	#dWhy = X_onehot.T @ dout
+	dWhy = X_onehot.T * dout
+	dby = np.sum(dWhy, axis=0).reshape(1, -1)
+	#dh = dout @ self.dWhy.T
         dh = dout * self.dWhy.T
-		# gradient through tanh
+	# gradient through tanh
         dh = dout * (1 - out**2)
         # add up gradient from previous gradient
         dh += dh_next
         # hidden state
         dbh = dh
-		#dWhh = h_prev.T @ dh
+	#dWhh = h_prev.T @ dh
         dWhh = h_prev.T * dh
-		#dWxh = X_onehot.T @ dh
+	#dWxh = X_onehot.T @ dh
         dWxh = X_onehot.T * dh
-		#dh_next = dh @ Whh.T
-		dh_next = dh * Whh.T
+	#dh_next = dh @ Whh.T
+	dh_next = dh * Whh.T
 
         grads = dict(Wxh=dWxh, Whh=dWhh, Why=dWhy, bh=dbh, by=dby)
 
