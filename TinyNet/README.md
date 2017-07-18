@@ -1,9 +1,6 @@
-# deepnet
+# TinyNet
 
 Implementations of CNNs, RNNs and cool new techniques in deep learning
-
-Note: deepnet is a work in progress and things will be added gradually. It is not intended for production, use it to learn and study implementations of latest and greatest in deep learning.
-
 
 **Network Architecture**
 1. Convolutional net
