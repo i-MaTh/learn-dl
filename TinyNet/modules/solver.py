@@ -11,10 +11,10 @@ def get_minibatches(X, y, minibatch_size,shuffle=True):
     m = X.shape[0]
     minibatches = []
     if shuffle:
-		#X, y = shuffle(X, y)
-		indices = np.arange(m)
-		random.shuffle(indices)
-		X, y = X[indices], y[indices]
+	#X, y = shuffle(X, y)
+	indices = np.arange(m)
+	random.shuffle(indices)
+	X, y = X[indices], y[indices]
 
 	for i in range(0, m, minibatch_size):
         X_batch = X[i:i + minibatch_size, ]

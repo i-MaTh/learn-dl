@@ -29,13 +29,12 @@ class Conv():
 
         self.n_X = X.shape[0]
 
-        self.X_col = im2col_indices(
-            X, self.h_filter, self.w_filter, stride=self.stride, padding=self.padding)
+        self.X_col = im2col_indices(X, self.h_filter, self.w_filter, stride=self.stride, padding=self.padding)
         W_row = self.W.reshape(self.n_filter, -1)
 
-		#out = W_row @ self.X_col + self.b
-		out = np.dot(W_row, self.X_col) + self.b
-		out = out.reshape(self.n_filter, self.h_out, self.w_out, self.n_X)
+	#out = W_row @ self.X_col + self.b
+	out = np.dot(W_row, self.X_col) + self.b
+	out = out.reshape(self.n_filter, self.h_out, self.w_out, self.n_X)
         out = out.transpose(3, 0, 1, 2)
         return out
 
@@ -43,19 +42,18 @@ class Conv():
 
         dout_flat = dout.transpose(1, 2, 3, 0).reshape(self.n_filter, -1)
 
-		#dW = dout_flat @ self.X_col.T
+	#dW = dout_flat @ self.X_col.T
         dW = np.dot(dout_flat, self.X_col.T)
-		dW = dW.reshape(self.W.shape)
+	dW = dW.reshape(self.W.shape)
 
         db = np.sum(dout, axis=(0, 2, 3)).reshape(self.n_filter, -1)
 
         W_flat = self.W.reshape(self.n_filter, -1)
 
-		#dX_col = W_flat.T @ dout_flat
+	#dX_col = W_flat.T @ dout_flat
         dX_col = np.dot(W_flat.T, dout_flat)
-		shape = (self.n_X, self.d_X, self.h_X, self.w_X)
-        dX = col2im_indices(dX_col, shape, self.h_filter,
-                            self.w_filter, self.padding, self.stride)
+	shape = (self.n_X, self.d_X, self.h_X, self.w_X)
+        dX = col2im_indices(dX_col, shape, self.h_filter, self.w_filter, self.padding, self.stride)
 
         return dX, [dW, db]
 
@@ -82,17 +80,13 @@ class Maxpool():
 
     def forward(self, X):
         self.n_X = X.shape[0]
-        X_reshaped = X.reshape(
-            X.shape[0] * X.shape[1], 1, X.shape[2], X.shape[3])
+        X_reshaped = X.reshape(X.shape[0] * X.shape[1], 1, X.shape[2], X.shape[3])
 
-        self.X_col = im2col_indices(
-            X_reshaped, self.size, self.size, padding=0, stride=self.stride)
+        self.X_col = im2col_indices(X_reshaped, self.size, self.size, padding=0, stride=self.stride)
 
         self.max_indexes = np.argmax(self.X_col, axis=0)
         out = self.X_col[self.max_indexes, range(self.max_indexes.size)]
-
-        out = out.reshape(self.h_out, self.w_out, self.n_X,
-                          self.d_X).transpose(2, 3, 0, 1)
+        out = out.reshape(self.h_out, self.w_out, self.n_X, self.d_X).transpose(2, 3, 0, 1)
         return out
 
     def backward(self, dout):
@@ -105,8 +99,7 @@ class Maxpool():
 
         # get the original X_reshaped structure from col2im
         shape = (self.n_X * self.d_X, 1, self.h_X, self.w_X)
-        dX = col2im_indices(dX_col, shape, self.size,
-                            self.size, padding=0, stride=self.stride)
+        dX = col2im_indices(dX_col, shape, self.size, self.size, padding=0, stride=self.stride)
         dX = dX.reshape(self.n_X, self.d_X, self.h_X, self.w_X)
         return dX, []
 
@@ -138,17 +131,17 @@ class FullyConnected():
 
     def forward(self, X):
         self.X = X
-		#out = self.X @ self.W + self.b
-		out = np.dot(self.X, self.W) + self.b
-		return out
+	#out = self.X @ self.W + self.b
+	out = np.dot(self.X, self.W) + self.b
+	return out
 
     def backward(self, dout):
-		#dW = self.X.T @ dout
-	    dW = np.dot(self.X.T, dout)
-		db = np.sum(dout, axis=0)
-		#dX = dout @ self.W.T
-	    dX = np.dot(dout, self.W.T)
-		return dX, [dW, db]
+	#dW = self.X.T @ dout
+	dW = np.dot(self.X.T, dout)
+	db = np.sum(dout, axis=0)
+	#dX = dout @ self.W.T
+	dX = np.dot(dout, self.W.T)
+	return dX, [dW, db]
 
 
 class Batchnorm():
